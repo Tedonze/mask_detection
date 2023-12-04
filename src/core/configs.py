@@ -15,8 +15,16 @@ class GlobalSettings(BaseModel):
     s3_prefix: str = os.getenv('S3_PREFIX')
 
 
+class ModelConfigs(BaseModel):
+    batch_size: int = 32
+    shuffle: bool = True
+
+    lr: float = 1e-04
+
+
 settings = GlobalSettings()
 
+model_settings = ModelConfigs()
 
 fs = S3FileSystem(
     client_kwargs={'endpoint_url': settings.s3_endpointUrl},

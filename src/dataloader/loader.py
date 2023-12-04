@@ -1,27 +1,32 @@
 from io import BytesIO
-from pandas import read_csv
-from torch.utils.data import Dataset
+from pandas import DataFrame
+from torch import Tensor
+from torch.utils.data import Dataset, DataLoader
 from torchvision.transforms import ToTensor
+from typing import Tuple
 from PIL import Image
-from src.core.configs import fs
+from src.core.configs import fs, model_settings
+from src.utils import splitted_dataframes
 
 
 class CustomImageDataset(Dataset):
     def __init__(
             self,
-            annotations_file,
-            img_dir,
+            img_labels: DataFrame,
+            img_dir: str,
             transform=None,
-            target_transform=None):
-        self.img_labels = read_csv(annotations_file)
+            target_transform=None
+    ) -> None:
+        super().__init__()
+        self.img_labels = img_labels
         self.img_dir = img_dir
         self.transform = transform
         self.target_transform = target_transform
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.img_labels)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int) -> Tuple[Tensor, int]:
         img_path = f'{self.img_dir}{self.img_labels.iloc[idx, 0]}'
         image = Image.open(BytesIO(fs.open(img_path).read()))
         image = ToTensor()(image)
@@ -31,3 +36,36 @@ class CustomImageDataset(Dataset):
         if self.target_transform:
             label = self.target_transform(label)
         return image, label
+
+
+class MaskDataloaders:
+    def __init__(self, img_dir: str, split_fractions: list):
+        (
+            self.trainDataset,
+            self.validationDataset,
+            self.testDataset
+        ) = tuple(
+            map(
+                lambda x: CustomImageDataset(x, img_dir),
+                splitted_dataframes(split_fractions)
+            )
+        )
+
+    def getDataloaders(self):
+        return (
+            DataLoader(
+                self.trainDataset,
+                batch_size=model_settings.batch_size,
+                shuffle=model_settings.shuffle
+            ),
+            DataLoader(
+                self.validationDataset,
+                batch_size=model_settings.batch_size,
+                shuffle=model_settings.shuffle
+            ),
+            DataLoader(
+                self.testDataset,
+                batch_size=model_settings.batch_size,
+                shuffle=model_settings.shuffle
+            )
+        )
