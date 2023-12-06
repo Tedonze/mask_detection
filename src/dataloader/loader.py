@@ -8,6 +8,8 @@ from PIL import Image
 from src.core.configs import fs, model_settings
 from src.utils import splitted_dataframes
 
+IMG_SIZE = 128
+
 
 class CustomImageDataset(Dataset):
     def __init__(
@@ -29,6 +31,7 @@ class CustomImageDataset(Dataset):
     def __getitem__(self, idx: int) -> Tuple[Tensor, int]:
         img_path = f'{self.img_dir}{self.img_labels.iloc[idx, 0]}'
         image = Image.open(BytesIO(fs.open(img_path).read()))
+        image = image.resize((IMG_SIZE, IMG_SIZE))
         image = ToTensor()(image)
         label = self.img_labels.iloc[idx, 1]
         if self.transform:
