@@ -3,6 +3,7 @@
 </br>
 </h1>
 
+[Google Meet Link](https://meet.google.com/zat-ugag-hvi)
 
 ## Description
 The goal of this project is to implement an end-to-end machine learning pipeline to detect 
@@ -21,6 +22,7 @@ someone is respecting sanitary measures about COVID-19.
 
 ## Project Development
 
+
 ### Dataset
 The dataset used, `Covid-19-PIS Dataset`, is a collection of images stratified in two classes 
 which are the groups of images of people wearing a mask to comply to COVID-19 measures and 
@@ -35,6 +37,8 @@ pytorch framework, the vision model is neural-nets based with the following arch
 
 
 ## References & Citations
+[Hands-on machine Learning with ScikitLearn](https://drive.google.com/file/d/1Ic13Zuk2FAUZem-3h75YSfSVbJi04Jp4/view?usp=sharing)
+
 ```bibtex
 @misc{ covid-19-pis_dataset,
     title = { Covid-19-PIS Dataset },
