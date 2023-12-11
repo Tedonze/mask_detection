@@ -70,7 +70,7 @@ class BaseModel():
             if early_stop.stop_ilteration(loss_validation):
                 break
             if early_stop.save:
-                 self.save_model("/save_model/")               
+                 self.save_model(f"loss_validation{loss_validation:.3f}.save")               
 
     def save_model(self, path):
         torch.save(self.model.state_dict(), path)
