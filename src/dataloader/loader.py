@@ -65,10 +65,6 @@ class MaskDataloaders:
                 self.validationDataset,
                 batch_size=model_settings.batch_size,
                 shuffle=model_settings.shuffle
-            ),
-            DataLoader(
-                self.testDataset,
-                batch_size=model_settings.batch_size,
-                shuffle=model_settings.shuffle
             )
+
         )

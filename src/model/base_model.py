@@ -16,7 +16,8 @@ class BaseModel():
     def fit(self, dataloader, n_epoch=10):
         for epoch in range(n_epoch):
             running_loss = 0.0
-            for i, data in enumerate(dataloader):
+            number_item = 0
+            for data in dataloader[0]:
                 inputs, labels = data
                 self.optimizer.zero_grad()
                 outputs = self.model(inputs)
@@ -24,10 +25,22 @@ class BaseModel():
                 loss.backward()
                 self.optimizer.step()
                 running_loss += loss.item()
-                if i % 10 == 9:
-                    print(f'''epoch: {epoch},batch number {i+1} 
-                    .Loss:{running_loss/10 :.3f}''')
-                    running_loss = 0
+                number_item += 1
+            loss_training = running_loss/number_item
+            print(f'''epoch: {epoch},.Loss:{loss_training :.3f}''')
+            running_loss = 0.0
+            number_item = 0
+            for  data  in dataloader[1]:
+                    inputs, labels = data
+                    self.optimizer.zero_grad()
+                    outputs = self.model(inputs)
+                    loss = self.criterion(outputs, labels)
+                    running_loss += loss.item()
+                    number_item += 1
+            loss_validation = running_loss/number_item
+            print(f'''epoch: {epoch},.Loss:{loss_validation :.3f}''')
+
+                    
 
     def save_model(self, path):
         torch.save(self.model.state_dict(), path)
