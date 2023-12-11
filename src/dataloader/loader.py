@@ -16,8 +16,8 @@ class CustomImageDataset(Dataset):
             self,
             img_labels: DataFrame,
             img_dir: str,
-            transform = Compose([ToTensor()]),
-            target_transform = None
+            transform=Compose([ToTensor()]),
+            target_transform=None
     ) -> None:
         super().__init__()
         self.img_labels = img_labels
