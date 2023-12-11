@@ -6,7 +6,7 @@ from src.utils import get_device
 device = get_device()
 
 
-class EarlyStopping():
+class EarlyStopping:
     def __init__(self, diff, max_try) -> None:
         self.count = 0
         self.best_validation_loss = float('inf')
@@ -22,10 +22,11 @@ class EarlyStopping():
         else:
             self.save = False
             self.count += 1
+        print(self.count)
         return self.count > self.max_try
 
 
-class BaseModel():
+class BaseModel:
     def __init__(self, model, lr=1e-3, momentum=0.9):
         self.model = model
         self.criterion = nn.CrossEntropyLoss()
@@ -35,8 +36,17 @@ class BaseModel():
             momentum=momentum
             )
 
-    def fit(self, dataloader, n_epoch=10,  diff=1e-3, max_try=10):
+    def fit(self, dataloader, n_epoch=10,  diff=1e-4, max_try=10):
+        """_summary_
+
+        Args:
+            dataloader (_type_): _description_
+            n_epoch (int, optional): _description_. Defaults to 10.
+            diff (_type_, optional): _description_. Defaults to 1e-4.
+            max_try (int, optional): _description_. Defaults to 10.
+        """
         self.model = self.model.to(device)
+        print(device)
         for epoch in range(n_epoch):
             running_loss = 0.0
             number_item = 0
@@ -77,8 +87,7 @@ class BaseModel():
         torch.save(self.model.state_dict(), path)
 
     def load_model(self, path):
-        self.model.load_dict(path)
-
+        self.model.load_state_dict(torch.load(path))
     
 
 
