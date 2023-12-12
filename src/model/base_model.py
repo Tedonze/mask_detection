@@ -21,8 +21,9 @@ class EarlyStopping:
             self.save = True
         else:
             self.save = False
-            self.count += 1
-        print(self.count)
+            self.count = self.count + 1
+        if self.count > self.max_try:
+            print("break")
         return self.count > self.max_try
 
 
@@ -36,14 +37,14 @@ class BaseModel:
             momentum=momentum
             )
 
-    def fit(self, dataloader, n_epoch=10,  diff=1e-4, max_try=10):
+    def fit(self, dataloader, n_epoch=100,  diff=1e-4, max_try=10):
         """_summary_
 
         Args:
             dataloader (_type_): _description_
             n_epoch (int, optional): _description_. Defaults to 10.
             diff (_type_, optional): _description_. Defaults to 1e-4.
-            max_try (int, optional): _description_. Defaults to 10.
+            max_try (int, optional): _description_. Defaults to 100.
         """
         self.model = self.model.to(device)
         print(device)
