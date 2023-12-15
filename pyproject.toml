@@ -13,6 +13,9 @@ pydantic = "^2.5.2"
 python-dotenv = "^1.0.0"
 torch = "^2.1.1"
 torchvision = "^0.16.1"
+fastapi = "^0.105.0"
+uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
+python-multipart = "^0.0.6"
 
 
 [tool.poetry.group.dev.dependencies]
