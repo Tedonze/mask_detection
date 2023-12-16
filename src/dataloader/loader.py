@@ -5,8 +5,8 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision.transforms import ToTensor, Compose
 from typing import Tuple
 from PIL import Image
-from src.core.configs import fs, model_settings
-from src.utils import splitted_dataframes
+from core.configs import fs, model_settings
+from utils import splitted_dataframes
 
 IMG_SIZE = 128
 

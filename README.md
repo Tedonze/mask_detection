@@ -34,7 +34,9 @@ The model aims to be a supervised one since images labels are known. Built with
 pytorch framework, the vision model is neural-nets based with the following architecture 
 
 ### Deployment
-
+### Example
+![Me without mask](<Capture d’écran du 2023-12-16 03-10-55.png>)
+![Me with mask](<Capture d’écran du 2023-12-16 03-09-28.png>)
 
 ## References & Citations
 [Hands-on machine Learning with ScikitLearn](https://drive.google.com/file/d/1Ic13Zuk2FAUZem-3h75YSfSVbJi04Jp4/view?usp=sharing)

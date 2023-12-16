@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchvision.transforms import ToTensor
-from src.dataloader.loader import IMG_SIZE
-from src.utils import get_device
+from dataloader.loader import IMG_SIZE
+from utils import get_device
 
 device = get_device()
 
@@ -89,14 +89,21 @@ class BaseModel:
         torch.save(self.model.state_dict(), path)
 
     def load_model(self, path):
-        self.model.load_state_dict(torch.load(path))
+        print(device)
+        if str(device) == 'cpu':
+            self.model.load_state_dict(
+                torch.load(path, map_location=torch.device('cpu')))
+        else:
+            self.model.load_state_dict(torch.load(path))
 
     def predict(self, image):
         image = image.resize((IMG_SIZE, IMG_SIZE))
         image = ToTensor()(image)
+        image = image[None, :, :, :]
         image = image.to(device)
         outputs = self.model(image)
-        return outputs.numpy()
+        outputs = nn.Softmax()(outputs)
+        return outputs.detach().numpy()
 
 
     
