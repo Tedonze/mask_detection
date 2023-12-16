@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torchvision.transforms import ToTensor
+from src.dataloader.loader import IMG_SIZE
 from src.utils import get_device
 
 device = get_device()
@@ -70,7 +72,6 @@ class BaseModel:
                 inputs, labels = data
                 inputs = inputs.to(device)
                 labels = labels.to(device)
-                self.optimizer.zero_grad()
                 outputs = self.model(inputs)
                 loss = self.criterion(outputs, labels)
                 running_loss += loss.item()
@@ -89,6 +90,15 @@ class BaseModel:
 
     def load_model(self, path):
         self.model.load_state_dict(torch.load(path))
+
+    def predict(self, image):
+        image = image.resize((IMG_SIZE, IMG_SIZE))
+        image = ToTensor()(image)
+        image = image.to(device)
+        outputs = self.model(image)
+        return outputs.numpy()
+
+
     
 
 
