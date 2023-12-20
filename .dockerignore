@@ -1,2 +1,4 @@
 /notebooks/*
 .git*
+/Example/*
+requirements.txt
