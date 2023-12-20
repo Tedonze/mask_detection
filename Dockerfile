@@ -5,9 +5,9 @@ COPY .  /mask_detection
 WORKDIR /mask_detection
 
 RUN pip install poetry && \ 
-    poetry install && \ 
-    poetry shell
+    poetry install 
+    
 
 EXPOSE 8501
 
-ENTRYPOINT [ "streamlit" , "run", "src/main.py" ]
+ENTRYPOINT [ "poetry" ,"run","streamlit" , "run", "src/main.py" ]

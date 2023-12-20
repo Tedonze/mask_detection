@@ -25,7 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry install --no-root
-          poetry shell
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
@@ -34,7 +33,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         run: |
-          pytest
+          poetry run pytest
   build_image:
     name: Docker Image Build
     runs-on: ubuntu-latest
