@@ -2,8 +2,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchvision.transforms import ToTensor
-from dataloader.loader import IMG_SIZE
-from utils import get_device
+from ..dataloader.loader import IMG_SIZE
+from ..utils import get_device
+
 
 device = get_device()
 
@@ -31,13 +32,14 @@ class EarlyStopping:
 
 class BaseModel:
     def __init__(self, model, lr=1e-3, momentum=0.9):
-        self.model = model
+        self.model = model.to(device)
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(
             model.parameters(),
             lr=lr,
             momentum=momentum
-            )
+        )
+        self.validation_error = 0
 
     def fit(self, dataloader, n_epoch=100,  diff=1e-4, max_try=10):
         """_summary_
@@ -48,8 +50,6 @@ class BaseModel:
             diff (_type_, optional): _description_. Defaults to 1e-4.
             max_try (int, optional): _description_. Defaults to 100.
         """
-        self.model = self.model.to(device)
-        print(device)
         for epoch in range(n_epoch):
             running_loss = 0.0
             number_item = 0
@@ -83,18 +83,15 @@ class BaseModel:
             if early_stop.stop_ilteration(loss_validation):
                 break
             if early_stop.save:
-                self.save_model(f"loss_validation{loss_validation:.3f}.save")       
-    
+                self.save_model(f"loss_validation{loss_validation:.3f}.save")
+
     def save_model(self, path):
         torch.save(self.model.state_dict(), path)
 
     def load_model(self, path):
-        print(device)
-        if str(device) == 'cpu':
-            self.model.load_state_dict(
-                torch.load(path, map_location=torch.device('cpu')))
-        else:
-            self.model.load_state_dict(torch.load(path))
+        self.model.load_state_dict(
+            torch.load(path, map_location=device)
+        )
 
     def predict(self, image):
         image = image.resize((IMG_SIZE, IMG_SIZE))
@@ -103,29 +100,4 @@ class BaseModel:
         image = image.to(device)
         outputs = self.model(image)
         outputs = nn.Softmax()(outputs)
-        return outputs.detach().numpy()
-
-
-    
-
-
-
-             
-              
-         
-
-        
-              
-         
-             
-
-
-
-
-
-
-
-
-        
-
-
+        return outputs.cpu().detach().numpy()

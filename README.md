@@ -2,9 +2,12 @@
     Mask Detection
 </br>
 </h1>
-<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/Tedonze/mask_detection/mask_detection_ci_cd.yaml">
+
+<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/Tedonze/mask_detection/mask_detection_ci_cd.yaml?style=for-the-badge&label=Lint%2C%20Test%20%26%20Build%20docker%20imgae"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Tedonze/mask_detection?style=for-the-badge&label=REPO%20SIZE">
+
 
 [Google Meet Link](https://meet.google.com/zat-ugag-hvi)
+
 
 ## Description
 The goal of this project is to implement an end-to-end machine learning pipeline to detect 
