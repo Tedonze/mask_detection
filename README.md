@@ -2,7 +2,8 @@
     Mask Detection
 </br>
 </h1>
-[![CI/CD workflow](https://github.com/Tedonze/mask_detection/actions/workflows/mask_detection_ci_cd.yaml/badge.svg)](https://github.com/Tedonze/mask_detection/actions/workflows/mask_detection_ci_cd.yaml)
+<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/Tedonze/mask_detection/mask_detection_ci_cd.yaml">
+
 [Google Meet Link](https://meet.google.com/zat-ugag-hvi)
 
 ## Description
