@@ -2,7 +2,7 @@
     Mask Detection
 </br>
 </h1>
-
+[![CI/CD workflow](https://github.com/Tedonze/mask_detection/actions/workflows/mask_detection_ci_cd.yaml/badge.svg)](https://github.com/Tedonze/mask_detection/actions/workflows/mask_detection_ci_cd.yaml)
 [Google Meet Link](https://meet.google.com/zat-ugag-hvi)
 
 ## Description
