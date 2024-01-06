@@ -65,7 +65,6 @@ class BaseModel:
                 running_loss += loss.item()
                 number_item += 1
             loss_training = running_loss/number_item
-            print(f'''epoch: {epoch},.Loss training:{loss_training :.3f}''')
             running_loss = 0.0
             number_item = 0
             for data in dataloader[1]:
@@ -77,8 +76,8 @@ class BaseModel:
                 running_loss += loss.item()
                 number_item += 1
             loss_validation = running_loss/number_item
-            print(f'''epoch: {epoch},
-            .Loss validation:{loss_validation :.3f}''')
+            print(f'''epoch: {epoch} 
+            Loss training:{loss_training :.3f} Loss validation:{loss_validation :.3f}''')
             early_stop = EarlyStopping(diff, max_try)
             if early_stop.stop_ilteration(loss_validation):
                 break
@@ -92,7 +91,7 @@ class BaseModel:
         self.model.load_state_dict(
             torch.load(path, map_location=device)
         )
-
+        
     def predict(self, image):
         image = image.resize((IMG_SIZE, IMG_SIZE))
         image = ToTensor()(image)
